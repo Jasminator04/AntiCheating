@@ -6,37 +6,121 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('个人中心'),
+        backgroundColor: Colors.deepPurple,
       ),
-      body: Column(
+      body: ListView(
         children: [
           SizedBox(height: 30),
-          CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage('assets/avatar.png'), // 你可以先用默认图片，后续替换
+          Center(
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/avatar.png'),
+            ),
           ),
           SizedBox(height: 10),
-          Text('用户名: 张三', style: TextStyle(fontSize: 18)),
-          SizedBox(height: 5),
-          Text('手机号: 123-4567-8901', style: TextStyle(fontSize: 16, color: Colors.grey)),
+          Center(child: Text('用户名: 张三', style: TextStyle(fontSize: 18))),
+          Center(child: Text('手机号: 123-4567-8901', style: TextStyle(fontSize: 16, color: Colors.grey))),
+          SizedBox(height: 20),
+          Divider(),
 
-          SizedBox(height: 30),
+          // 实名认证状态
+          ListTile(
+            leading: Icon(Icons.verified_user, color: Colors.blue),
+            title: Text('实名认证'),
+            subtitle: Text('已认证'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // 跳转到实名认证详情
+            },
+          ),
+
+          // 安全等级
+          ListTile(
+            leading: Icon(Icons.security, color: Colors.green),
+            title: Text('账户安全等级'),
+            subtitle: Text('中等 · 建议绑定微信号'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // 跳转到安全设置页面
+            },
+          ),
+
+          Divider(),
+
+          // 举报记录
+          ListTile(
+            leading: Icon(Icons.report, color: Colors.red),
+            title: Text('我的举报'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // 跳转到举报记录页面
+            },
+          ),
+
+          // 消息通知
+          ListTile(
+            leading: Icon(Icons.notifications, color: Colors.orange),
+            title: Text('通知中心'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // 跳转到消息中心
+            },
+          ),
+
+          // 案例库
+          ListTile(
+            leading: Icon(Icons.menu_book, color: Colors.indigo),
+            title: Text('诈骗案例库'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // 跳转到案例学习页
+            },
+          ),
+
+          // 黑名单管理
+          ListTile(
+            leading: Icon(Icons.block, color: Colors.grey),
+            title: Text('黑名单管理'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // 跳转到黑名单管理页
+            },
+          ),
+
+          Divider(),
+
+          // 设置
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('设置'),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {},
           ),
+
+          // 关于我们
           ListTile(
             leading: Icon(Icons.info),
             title: Text('关于我们'),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {},
           ),
+
+          // 客服与反馈
+          ListTile(
+            leading: Icon(Icons.headset_mic),
+            title: Text('客服与反馈'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {},
+          ),
+
+          // 退出登录
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('退出登录'),
             trailing: Icon(Icons.arrow_forward_ios),
-            onTap: () {},
+            onTap: () {
+              // 添加退出登录逻辑
+            },
           ),
         ],
       ),
