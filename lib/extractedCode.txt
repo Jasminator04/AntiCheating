@@ -1,0 +1,862 @@
+import 'package:flutter/material.dart';
+import 'home_page.dart';
+import 'dynamic_page.dart';
+import 'profile_page.dart';
+import 'package:flutter_application_1/pages/login_page.dart';  
+void main() {
+  runApp(MyApp());
+}
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: '防诈骗应用',
+      home: MainPage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+class _MainPageState extends State<MainPage> {
+  int _selectedIndex = 0;
+  final List<Widget> _pages = [
+    HomePage(),
+    DynamicPage(),
+    ProfilePage(),
+  ];
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        selectedItemColor: Colors.blue,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '首页',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dynamic_feed), 
+            label: '动态',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: '个人中心',
+          ),
+        ],
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+class PhoneWarningPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('电话预警'),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('电话预警已开启！'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.deepPurple,
+            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: Text(
+            '开启电话预警',
+            style: TextStyle(fontSize: 18, color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+class SmsWarningPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('短信预警'),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('短信预警已开启！'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.deepPurple,
+            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: Text(
+            '开启短信预警',
+            style: TextStyle(fontSize: 18, color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+import 'pages/settings_page.dart';
+import 'pages/feedback_page.dart';
+import 'pages/report_page.dart';
+import 'pages/notification_page.dart';
+import 'pages/about_page.dart';
+class ProfilePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('个人中心'),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: ListView(
+        children: [
+          SizedBox(height: 30),
+          Center(
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/avatar.png'),
+            ),
+          ),
+          SizedBox(height: 10),
+          Center(child: Text('用户名: 张三', style: TextStyle(fontSize: 18))),
+          Center(child: Text('手机号: 123-4567-8901', style: TextStyle(fontSize: 16, color: Colors.grey))),
+          SizedBox(height: 20),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.security, color: Colors.green),
+            title: Text('账户安全等级'),
+            subtitle: Text('中等 · 建议绑定微信号'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.report, color: Colors.red),
+            title: Text('我的举报'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+  Navigator.push(context, MaterialPageRoute(builder: (_) => ReportPage()));
+},
+          ),
+          ListTile(
+            leading: Icon(Icons.notifications, color: Colors.orange),
+            title: Text('通知中心'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+  Navigator.push(context, MaterialPageRoute(builder: (_) => NotificationPage()));
+},
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('设置'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SettingsPage()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.info),
+            title: Text('关于我们'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+  Navigator.push(context, MaterialPageRoute(builder: (_) => AboutPage()));
+},
+          ),
+          ListTile(
+            leading: Icon(Icons.headset_mic),
+            title: Text('客服与反馈'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+  Navigator.push(context, MaterialPageRoute(builder: (_) => FeedbackPage()));
+},
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('退出登录'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+import 'phone_warning_page.dart'; 
+import 'sms_warning_page.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'blacklist_page.dart';
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('安心防骗助手'),
+        backgroundColor: Colors.deepPurple,
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: [
+          Container(
+            height: 180,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/banner.jpg'), 
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Container(
+              alignment: Alignment.bottomLeft,
+              padding: EdgeInsets.all(16),
+              color: Colors.black.withOpacity(0.3),
+              child: Text(
+                '防骗从你我做起\n及时预警，守护财产安全',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            ),
+          ),
+          SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text(
+              '常用功能',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: GridView.count(
+              crossAxisCount: 3,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                _buildFunctionItem(
+                  Icons.phone_forwarded,
+                  '电话预警',
+                  Colors.orange,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PhoneWarningPage()),
+                    );
+                  },
+                ),
+                _buildFunctionItem(
+                  Icons.sms_failed,
+                  '短信预警',
+                  Colors.redAccent,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SmsWarningPage()),
+                    );
+                  },
+                ),
+                _buildFunctionItem(
+                  Icons.report_gmailerrorred,
+                  '一键报警',
+                  Colors.indigo,
+                  onTap: () async {
+                    final Uri phoneUri = Uri(scheme: 'tel', path: '110');
+                    if (await canLaunchUrl(phoneUri)) {
+                      await launchUrl(phoneUri);
+                    } else {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('无法拨打电话')));
+                    }
+                  },
+                ),
+                _buildFunctionItem(
+                  Icons.library_books,
+                  '案例学习',
+                  Colors.teal,
+                ),
+                _buildFunctionItem(
+                  Icons.block, 
+                  '黑名单', 
+                  Colors.grey, 
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BlacklistPage()),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text(
+              '最新预警',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(16),
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.yellow[100],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('【高风险】假冒公检法诈骗频发！', style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 6),
+                Text('已有多人被骗转账，请勿轻信陌生来电。如有疑问请及时拨打官方反诈电话。'),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget _buildFunctionItem(IconData icon, String label, Color color, {VoidCallback? onTap}) {
+    return GestureDetector(
+      onTap: onTap, 
+      child: Container(
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.15),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 32, color: color),
+            SizedBox(height: 8),
+            Text(label, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+class DynamicPage extends StatelessWidget {
+  final List<Map<String, String>> articleList = [
+    {
+      'title': '警惕！最新冒充快递诈骗手段曝光',
+      'subtitle': '冒充客服以退款为由，引导用户转账……',
+      'time': '2025-04-20',
+      'source': '公安部网安局',
+    },
+    {
+      'title': '这些常见诈骗套路你都知道吗？',
+      'subtitle': '以“中奖”“客服”“办贷款”为由实施诈骗……',
+      'time': '2025-04-18',
+      'source': '防诈日报',
+    },
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('防诈动态'),
+        backgroundColor: Colors.deepPurple,
+        centerTitle: true,
+      ),
+      body: articleList.isEmpty
+          ? _buildEmptyState()
+          : ListView.builder(
+              padding: EdgeInsets.all(16),
+              itemCount: articleList.length,
+              itemBuilder: (context, index) {
+                final article = articleList[index];
+                return _buildArticleCard(article);
+              },
+            ),
+    );
+  }
+  Widget _buildArticleCard(Map<String, String> article) {
+    return Card(
+      margin: EdgeInsets.only(bottom: 16),
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: InkWell(
+        onTap: () {
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                article['title']!,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(height: 6),
+              Text(
+                article['subtitle']!,
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    article['source']!,
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                  Text(
+                    article['time']!,
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.article_outlined, size: 80, color: Colors.grey[400]),
+          SizedBox(height: 16),
+          Text('暂无推送文章', style: TextStyle(fontSize: 18, color: Colors.grey)),
+          SizedBox(height: 8),
+          Text('请稍后再试或检查网络连接', style: TextStyle(color: Colors.grey)),
+        ],
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+class BlacklistPage extends StatefulWidget {
+  @override
+  _BlacklistPageState createState() => _BlacklistPageState();
+}
+class _BlacklistPageState extends State<BlacklistPage> {
+  final TextEditingController _controller = TextEditingController();
+  final List<String> _blacklist = []; 
+  void _addToBlacklist() {
+    setState(() {
+      _blacklist.add(_controller.text); 
+      _controller.clear(); 
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('黑名单'),
+        backgroundColor: Colors.grey,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                labelText: '输入黑名单号码',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.phone,
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _addToBlacklist,
+              child: Text('添加到黑名单'),
+            ),
+            SizedBox(height: 20),
+            Text(
+              '黑名单号码:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            _blacklist.isEmpty
+                ? Text('暂无黑名单号码')
+                : Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _blacklist.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(_blacklist[index]),
+                        );
+                      },
+                    ),
+                  ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+class SettingsPage extends StatelessWidget {
+  @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('设置'),
+      backgroundColor: Colors.deepPurple,
+    ),
+    body: ListView(
+      children: [
+        ListTile(
+          leading: Icon(Icons.person),
+          title: Text('账号设置'),
+          onTap: () {
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.lock),
+          title: Text('隐私与安全'),
+          onTap: () {
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.info),
+          title: Text('关于应用'),
+          onTap: () {
+          },
+        ),
+      ],
+    ),
+  );
+}
+}
+import 'package:flutter/material.dart';
+class ReportPage extends StatelessWidget {
+  final List<Map<String, String>> reports = [
+    {
+      'title': '疑似冒充银行短信',
+      'date': '2025-04-10',
+      'status': '已处理',
+    },
+    {
+      'title': '陌生来电要求转账',
+      'date': '2025-03-28',
+      'status': '处理中',
+    },
+    {
+      'title': '虚假中奖信息',
+      'date': '2025-02-15',
+      'status': '已驳回',
+    },
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('我的举报'),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: ListView.builder(
+        itemCount: reports.length,
+        itemBuilder: (context, index) {
+          final report = reports[index];
+          return ListTile(
+            leading: Icon(Icons.report, color: Colors.red),
+            title: Text(report['title'] ?? ''),
+            subtitle: Text('日期：${report['date']}'),
+            trailing: Text(
+              report['status'] ?? '',
+              style: TextStyle(
+                color: report['status'] == '已处理'
+                    ? Colors.green
+                    : (report['status'] == '处理中' ? Colors.orange : Colors.grey),
+              ),
+            ),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Text('举报详情'),
+                  content: Text('标题：${report['title']}\n状态：${report['status']}\n日期：${report['date']}'),
+                  actions: [
+                    TextButton(onPressed: () => Navigator.pop(context), child: Text('关闭')),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+class NotificationPage extends StatelessWidget {
+  final List<Map<String, String>> notifications = [
+    {
+      'title': '账户安全提醒',
+      'content': '建议您绑定微信以提升账号安全等级。',
+      'date': '2025-04-30',
+    },
+    {
+      'title': '举报反馈',
+      'content': '您举报的“陌生来电要求转账”已被处理，谢谢您的支持！',
+      'date': '2025-04-25',
+    },
+    {
+      'title': '防诈骗提示',
+      'content': '近期有冒充银行客服的诈骗短信，请提高警惕。',
+      'date': '2025-04-22',
+    },
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('通知中心'),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: ListView.separated(
+        itemCount: notifications.length,
+        separatorBuilder: (_, __) => Divider(height: 1),
+        itemBuilder: (context, index) {
+          final notice = notifications[index];
+          return ListTile(
+            leading: Icon(Icons.notifications_active, color: Colors.orange),
+            title: Text(notice['title'] ?? ''),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(notice['content'] ?? ''),
+                SizedBox(height: 4),
+                Text(
+                  notice['date'] ?? '',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              ],
+            ),
+            isThreeLine: true,
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Text(notice['title'] ?? ''),
+                  content: Text(notice['content'] ?? ''),
+                  actions: [
+                    TextButton(onPressed: () => Navigator.pop(context), child: Text('关闭')),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+class _LoginPageState extends State<LoginPage> {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  void _login() {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+    if (username == 'admin' && password == '1234') {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('用户名或密码错误')));
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('登录')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(labelText: '用户名'),
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(labelText: '密码'),
+              obscureText: true,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _login,
+              child: Text('登录'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+class FeedbackPage extends StatefulWidget {
+  @override
+  _FeedbackPageState createState() => _FeedbackPageState();
+}
+class _FeedbackPageState extends State<FeedbackPage> {
+  final TextEditingController _controller = TextEditingController();
+  void _submitFeedback() {
+    String feedback = _controller.text.trim();
+    if (feedback.isNotEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('反馈已提交，感谢您的意见！')),
+      );
+      _controller.clear();
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('客服与反馈'),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('联系客服：', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            Text('微信号：123456789'),
+            Text('电话：123-4567-8901'),
+            Text('邮箱：support@example.com'),
+            Divider(height: 30),
+            Text('您的反馈：', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            TextField(
+              controller: _controller,
+              maxLines: 5,
+              decoration: InputDecoration(
+                hintText: '请输入您的建议或问题...',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16),
+            Center(
+              child: ElevatedButton(
+                onPressed: _submitFeedback,
+                child: Text('提交反馈'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+class AboutPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('关于我们'),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Icon(Icons.shield, size: 80, color: Colors.deepPurple),
+                  SizedBox(height: 10),
+                  Text(
+                    '安心防骗助手',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '版本号 1.0.0',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30),
+            Text(
+              '产品简介',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              '安心防骗助手是一款致力于提升用户防诈骗意识的移动应用。'
+              '我们通过案例库、风险预警和智能识别技术，为用户提供全方位的防骗保护。',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 20),
+            Text(
+              '联系我们',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text('邮箱：support@example.com'),
+            Text('客服电话：123-4567-8901'),
+            Text('微信客服：123456789'),
+            Spacer(),
+            Center(
+              child: Text(
+                '© 2025 安心防骗助手团队',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

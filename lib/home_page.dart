@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'phone_warning_page.dart'; 
+import 'sms_warning_page.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'blacklist_page.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -12,7 +16,7 @@ class HomePage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          // 顶部宣传图（还未完成！）
+          // 顶部宣传图
           Container(
             height: 180,
             decoration: BoxDecoration(
@@ -43,7 +47,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
 
-          // 功能按钮区（GridView）
+          // 功能按钮区
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: GridView.count(
@@ -53,12 +57,66 @@ class HomePage extends StatelessWidget {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                _buildFunctionItem(Icons.phone_forwarded, '电话预警', Colors.orange),
-                _buildFunctionItem(Icons.sms_failed, '短信预警', Colors.redAccent),
-                _buildFunctionItem(Icons.report_gmailerrorred, '一键报警', Colors.indigo),
-                _buildFunctionItem(Icons.warning_amber, '诈骗预警', Colors.green),
-                _buildFunctionItem(Icons.library_books, '案例学习', Colors.teal),
-                _buildFunctionItem(Icons.block, '黑名单', Colors.grey),
+                _buildFunctionItem(
+                  Icons.phone_forwarded,
+                  '电话预警',
+                  Colors.orange,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PhoneWarningPage()),
+                    );
+                  },
+                ),
+                _buildFunctionItem(
+                  Icons.sms_failed,
+                  '短信预警',
+                  Colors.redAccent,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SmsWarningPage()),
+                    );
+                  },
+                ),
+                _buildFunctionItem(
+                  Icons.report_gmailerrorred,
+                  '一键报警',
+                  Colors.indigo,
+                  onTap: () async {
+                    final Uri phoneUri = Uri(scheme: 'tel', path: '110');
+                    if (await canLaunchUrl(phoneUri)) {
+                      await launchUrl(phoneUri);
+                    } else {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('无法拨打电话')));
+                    }
+                  },
+                ),
+                // _buildFunctionItem(
+                //   Icons.warning_amber,
+                //   '诈骗预警',
+                //   Colors.green,
+                // ),
+                _buildFunctionItem(
+                  Icons.library_books,
+                  '案例学习',
+                  Colors.teal,
+                ),
+                _buildFunctionItem(
+                  Icons.block, // 设置图标为“封锁”图标
+                  '黑名单', // 设置标签为“黑名单”
+                  Colors.grey, // 设置按钮颜色
+                  onTap: () {
+                    // 点击时跳转到黑名单页面
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BlacklistPage()),
+                    );
+                  },
+                ),
+
               ],
             ),
           ),
@@ -92,11 +150,10 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildFunctionItem(IconData icon, String label, Color color) {
+  // 封装功能按钮
+  Widget _buildFunctionItem(IconData icon, String label, Color color, {VoidCallback? onTap}) {
     return GestureDetector(
-      onTap: () {
-        // TODO: 实现跳转功能
-      },
+      onTap: onTap, // 点击响应
       child: Container(
         decoration: BoxDecoration(
           color: color.withOpacity(0.15),
